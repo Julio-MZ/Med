@@ -6,23 +6,40 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
+import com.example.med.Utilidades.Utilidades;
+
 public class ConexionSQLiteHelper extends SQLiteOpenHelper {
-    final String CREAR_TABLA_PACIENTE="CREATE TABLE Paciente (Rut_Pac VARCHAR(13) PRIMARY KEY NOT NULL, " +
-            "Nombre_Pac VARCHAR(50), Apellido_Pac VARCHAR(50), Genero_Pac ENUM('H','M'), FechNac_Pac DATE, " +
-            "Correo_Pac VARCHAR(50), Telefono_Pac VARCHAR(15), Direccion_Pac VARCHAR(80), " +
-            "Contrasena_Pac VARCHAR(20), IDComuna INTEGER NOT NULL"
 
     public ConexionSQLiteHelper(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
     }
 
     @Override
-    public void onCreate(SQLiteDatabase sqLiteDatabase) {
-
+    public void onCreate(SQLiteDatabase db) {
+        db.execSQL(Utilidades.CREAR_TABLA_REGION);
+        db.execSQL(Utilidades.CREAR_TABLA_COMUNA);
+        db.execSQL(Utilidades.CREAR_TABLA_PREVISION);
+        db.execSQL(Utilidades.CREAR_TABLA_PACIENTE);
+        db.execSQL(Utilidades.CREAR_TABLA_PRESTACION);
+        db.execSQL(Utilidades.CREAR_TABLA_ESPECIALIDAD);
+        db.execSQL(Utilidades.CREAR_TABLA_MEDICO);
+        db.execSQL(Utilidades.CREAR_TABLA_EXAMEN);
+        db.execSQL(Utilidades.CREAR_TABLA_RESULTADOEXAM);
+        db.execSQL(Utilidades.CREAR_TABLA_CONSULTA);
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-
+    public void onUpgrade(SQLiteDatabase db, int versionAntigua, int versionNueva) {
+        db.execSQL("DROP TABLE IF EXISTS Region;");
+        db.execSQL("DROP TABLE IF EXISTS Comuna;");
+        db.execSQL("DROP TABLE IF EXISTS Prevision;");
+        db.execSQL("DROP TABLE IF EXISTS Paciente;");
+        db.execSQL("DROP TABLE IF EXISTS Prestacion;");
+        db.execSQL("DROP TABLE IF EXISTS Especialidad;");
+        db.execSQL("DROP TABLE IF EXISTS Medico;");
+        db.execSQL("DROP TABLE IF EXISTS Examen;");
+        db.execSQL("DROP TABLE IF EXISTS ResultadoExam;");
+        db.execSQL("DROP TABLE IF EXISTS Consulta;");
+        onCreate(db);
     }
 }
