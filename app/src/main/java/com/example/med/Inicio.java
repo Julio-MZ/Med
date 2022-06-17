@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
+import com.example.med.Conexion.ConexionSQLiteHelper;
+
 public class Inicio extends AppCompatActivity {
 
     @Override
