@@ -10,10 +10,14 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.github.rtoshiro.util.format.MaskFormatter;
+import com.github.rtoshiro.util.format.SimpleMaskFormatter;
+import com.github.rtoshiro.util.format.text.MaskTextWatcher;
+
 import java.util.Calendar;
 
 public class Registro extends AppCompatActivity implements View.OnClickListener {
-    EditText editTextDate;
+    EditText editTextDate, etxtRut;
 
     private int dia, mes, anio;
 
@@ -22,15 +26,20 @@ public class Registro extends AppCompatActivity implements View.OnClickListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registro);
 
-        Spinner spinner = (Spinner) findViewById(R.id.spinner);
+        Spinner spinner = (Spinner) findViewById(R.id.spnGenero);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.generos_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
-        editTextDate = (EditText) findViewById(R.id.editTextDate);
+        editTextDate = (EditText) findViewById(R.id.dtpFechNac);
+        etxtRut = (EditText) findViewById(R.id.etxtRut);
 
         editTextDate.setOnClickListener(this);
+
+        SimpleMaskFormatter smf = new SimpleMaskFormatter("NN.NNN.NNN-A");
+        MaskTextWatcher mtw = new MaskTextWatcher(etxtRut, smf);
+        etxtRut.addTextChangedListener(mtw);
     }
 
     @Override
@@ -45,7 +54,8 @@ public class Registro extends AppCompatActivity implements View.OnClickListener 
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 editTextDate.setText(day + "/" + (month + 1) + "/" + year);
             }
-        }, dia, mes, anio);
+        }, anio, mes, dia);
+        datePickerDialog.getDatePicker().setMaxDate(Calendar.getInstance().getTimeInMillis());
         datePickerDialog.show();
     }
 }
